@@ -9,22 +9,48 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script src="./js/index.js" defer></script>
+	<script src="./js/index.js" defer></script> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+	
 
 </head>
-<body>
+<div class="container" >
+
+<div id= "editionMode" class= "editionMode">
+	<i class="fa-regular fa-pen-to-square"></i> <span>Mode édition</span>
+</div>
+
+
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			<li><a href="#login" id="login-button">login</a></li>
+			<i class="fa-brands fa-instagram" alt="Instagram"></i>
 		</ul>
 	</nav>
 </header>
-<main>
+
+<main id="dynamic-login"> 
+    <section id="login">
+        <h2>Log In</h2>
+        <form id="loginForm">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Se connecter</button>
+        </form>
+        <!-- Lien mot de passe oublié -->
+        <a href="#" id="forgot-password">Mot de passe oublié</a>
+    </section>
+</main>
+
+
+<main id="Page-Sophie">
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
@@ -32,12 +58,23 @@
 		<article>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux, et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
-	<section id="portfolio">
-		<h2>Mes Projets</h2>
+
+	<section class="buttonModife">
+		<h2>Mes projets</h2>
+		<button id="edit-button">
+			<i class="fa-solid fa-pen-to-square"></i> Modifier
+		</button>
+	</section> 
+
+		<section id="portfolio"> 
+
+		<div id = "filtre" class = "filtre"> 
+		</div>
+
 		<div class="gallery">
 			<!--
 			<figure>
@@ -89,7 +126,7 @@
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
-		<p>Vous avez un projet ? Discutons-en !</p>
+		<span>Vous avez un projet ? Discutons-en !</span>
 		<form action="#" method="post">
 			<label for="name">Nom</label>
 			<input type="text" name="name" id="name">
@@ -102,12 +139,48 @@
 	</section>
 </main>
 
+
+<div id="modal" class="hidden">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <!-- Contenu de la galerie -->
+        <div id="gallery-content">
+            <h2>Galerie photo</h2>
+            <div class="photo-gallery">
+                <!-- Les images générées dynamiquement avec JS apparaîtront ici -->
+            </div>
+            <button class="add-photo-button">Ajouter une photo</button>
+        </div>
+        <!-- Contenu de l'ajout de photo -->
+        <div id="add-photo-content" class="hidden">
+            <button id="back-to-gallery" class="back-button">Retour</button>
+            <h2>Ajout photo</h2>
+            <form id="addPhotoForm">
+                <div class="upload-container">
+                    <label for="photoInput" class="upload-label">
+                        <i class="fa-regular fa-image"></i> + Ajouter photo
+                    </label>
+                    <input type="file" id="photoInput" name="photo" accept="image/*" hidden required>
+                </div>
+                <label for="titleInput">Titre</label>
+                <input type="text" id="titleInput" name="title" required>
+                <label for="categorySelect">Catégorie</label>
+                <select id="categorySelect" name="category" required>
+                    <!-- Les catégories seront ajoutées dynamiquement -->
+                </select>
+                <button type="submit" class="validate-button">Valider</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 <footer>
 	<nav>
 		<ul>
-			<li>Mentions Légales</li>
+			<li class="navFooter">Mentions Légales</li>
 		</ul>
 	</nav>
 </footer>
-</body>
 </html>
