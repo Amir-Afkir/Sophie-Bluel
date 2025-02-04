@@ -10,9 +10,7 @@ const photoGallery = document.querySelector('.photo-gallery');
 /* FONCTIONS D'ACCÈS À L'API */
 /* ===================== */
 
-/**
- * Récupère les travaux depuis l'API et met à jour l'affichage
- */
+//Récupère les travaux depuis l'API et met à jour l'affichage
 async function getWorks() {
     try {
         const response = await fetch('http://localhost:5678/api/works');
@@ -28,9 +26,7 @@ async function getWorks() {
     }
 }
 
-/**
- * Récupère les catégories depuis l'API et crée les boutons de filtre
- */
+//Récupère les catégories depuis l'API et crée les boutons de filtre
 async function getFiltre() {
     try {
         const response = await fetch('http://localhost:5678/api/categories');
@@ -62,9 +58,7 @@ async function getFiltre() {
 /* FONCTIONS D'AFFICHAGE */
 /* ===================== */
 
-/**
- * Affiche les travaux dans le portfolio principal
- */
+//Affiche les travaux dans le portfolio principal
 function displayWorks(works) {
     gallery.innerHTML = ""; // Réinitialise la galerie
     works.forEach(work => {
@@ -73,9 +67,7 @@ function displayWorks(works) {
     });
 }
 
-/**
- * Affiche les travaux dans la modale
- */
+//Affiche les travaux dans la modale
 function displayWorksModal(works) {
     photoGallery.innerHTML = ""; // Vide le conteneur pour éviter les doublons
     works.forEach(work => {
@@ -88,9 +80,7 @@ function displayWorksModal(works) {
 /* FONCTIONS DE CRÉATION D'ÉLÉMENTS */
 /* ===================== */
 
-/**
- * Crée un élément <figure> pour un travail à afficher dans le portfolio
- */
+//Crée un élément <figure> pour un travail à afficher dans le portfolio
 function createWorkFigure(work) {
     const figure = document.createElement("figure");
     figure.id = work.categoryId; // On peut utiliser l'ID de la catégorie si besoin
@@ -107,9 +97,7 @@ function createWorkFigure(work) {
     return figure;
 }
 
-/**
- * Crée un élément pour un travail dans la modale, avec un bouton pour supprimer le travail
- */
+//Crée un élément pour un travail dans la modale, avec un bouton pour supprimer le travail
 function createModalWorkFigure(work) {
     const div = document.createElement("div");
     div.classList.add("photo-item");
@@ -150,9 +138,7 @@ function createModalWorkFigure(work) {
 /* FONCTIONS DE GESTION DES FILTRES */
 /* ===================== */
 
-/**
- * Configure les événements sur les boutons de filtre
- */
+//Configure les événements sur les boutons de filtre
 function initializeFilterButtons() {
     const buttons = document.querySelectorAll(".categorie-filtre");
     if (buttons.length === 0) return;
@@ -186,9 +172,7 @@ function initializeFilterButtons() {
 /* FONCTIONS DE GESTION DE LA CONNEXION */
 /* ===================== */
 
-/**
- * Configure l'affichage selon que l'utilisateur soit connecté ou non
- */
+//Configure l'affichage selon que l'utilisateur soit connecté ou non
 function initializeLoginButton() {
     const loginButton = document.getElementById("login-button");
     const dynamicLogin = document.getElementById("dynamic-login");
@@ -221,9 +205,7 @@ function initializeLoginButton() {
     }
 }
 
-/**
- * Met à jour le libellé et le comportement du bouton de connexion/déconnexion
- */
+//Met à jour le libellé et le comportement du bouton de connexion/déconnexion
 function updateLoginButtonState(button, text, onClickHandler) {
     button.textContent = text;
     button.href = "#login";
@@ -233,26 +215,20 @@ function updateLoginButtonState(button, text, onClickHandler) {
     };
 }
 
-/**
- * Déconnecte l'utilisateur en supprimant le token et actualise l'affichage
- */
+//Déconnecte l'utilisateur en supprimant le token et actualise l'affichage
 function logout(dynamicLogin, pageSophie, loginButton) {
     localStorage.removeItem("token");
     alert("Vous êtes déconnecté.");
     initializeLoginButton();
 }
 
-/**
- * Affiche la page de connexion et masque le contenu principal
- */
+//Affiche la page de connexion et masque le contenu principal
 function showLoginPage(dynamicLogin, pageSophie) {
     dynamicLogin.style.display = "block";
     pageSophie.style.display = "none";
 }
 
-/**
- * Ajoute l'événement de soumission sur le formulaire de connexion
- */
+//Ajoute l'événement de soumission sur le formulaire de connexion
 function addLoginFormHandler() {
     const loginForm = document.getElementById("loginForm");
 
@@ -292,28 +268,126 @@ function addLoginFormHandler() {
 /* FONCTIONS DE GESTION DE LA MODALE */
 /* ===================== */
 
-/**
- * Configure les événements pour ouvrir et fermer la modale
- */
+//Configure les événements pour ouvrir et fermer la modale
 function setupModalEvents() {
     const modal = document.getElementById("modal");
     const modifyButton = document.getElementById("edit-button");
     const closeButton = document.querySelector(".close-button");
+    const addPhoto = document.querySelector(".add-photo-button");
+    const blockAddPhoto = document.getElementById ("add-photo-content");
+    const galleryContent = document.getElementById ("gallery-content"); 
+    const backGallery = document.getElementById ("back-to-gallery"); 
 
     // Ouvre la modale quand l'utilisateur clique sur "Modifier"
     modifyButton.addEventListener("click", () => {
         modal.classList.add("visible");
+        blockAddPhoto.classList.add("hidden");
+    });
+
+    // Affiche le menu d'ajout de photo dans la modale
+    addPhoto.addEventListener("click", () => {
+        galleryContent.classList.add("hidden");
+        blockAddPhoto.classList.remove("hidden");
+        blockAddPhoto.classList.add("visible");
+    });
+
+    // Reviens le menu de galery photo dans la modale
+    backGallery.addEventListener("click", () => {
+        galleryContent.classList.remove("hidden");
+        blockAddPhoto.classList.remove("visible");
+        blockAddPhoto.classList.add("hidden");
     });
 
     // Ferme la modale quand l'utilisateur clique sur la croix
     closeButton.addEventListener("click", () => {
+        galleryContent.classList.remove("hidden");
+        blockAddPhoto.classList.remove("visible");
+        blockAddPhoto.classList.add("hidden");
         modal.classList.remove("visible");
     });
 
     // Ferme la modale si l'utilisateur clique en dehors du contenu
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
-            modal.classList.remove("visible");
+            galleryContent.classList.remove("hidden");
+            blockAddPhoto.classList.remove("visible");
+            blockAddPhoto.classList.add("hidden");
+            modal.classList.remove("visible");;
+        }
+    });    
+}
+
+/* ===================== */
+/* GESTION DU FORMULAIRE D'AJOUT DE PHOTO */
+/* ===================== */
+
+// Gestion de la soumission du formulaire d'ajout de photo
+function setupAddPhotoForm() {
+    const addPhotoForm = document.getElementById("addPhotoForm");
+    const photoInput = document.getElementById("photoInput");
+    const titleInput = document.getElementById("titleInput");
+    const categorySelect = document.getElementById("categorySelect");
+
+    // Charger les catégories dans le formulaire
+    async function loadCategories() {
+        try {
+            const response = await fetch('http://localhost:5678/api/categories');
+            if (!response.ok) throw new Error('Erreur lors de la récupération des catégories');
+            const categories = await response.json();
+            categories.forEach(category => {
+                const option = document.createElement("option");
+                option.value = category.id;
+                option.textContent = category.name;
+                categorySelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // Charger les catégories dès le chargement de la page
+    loadCategories();
+
+    // Gérer la soumission du formulaire
+    addPhotoForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData();
+        const file = photoInput.files[0];
+
+        // Vérifier qu'un fichier a été sélectionné
+        if (!file) {
+            alert("Veuillez sélectionner une image.");
+            return;
+        }
+
+        formData.append("image", file);
+        formData.append("title", titleInput.value);
+        formData.append("category", categorySelect.value);
+
+        try {
+            const response = await fetch('http://localhost:5678/api/works', {
+                method: "POST",
+                body: formData,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+            });
+
+            if (response.ok) {
+                alert("Photo ajoutée avec succès !");
+                addPhotoForm.reset(); // Réinitialiser le formulaire
+                document.getElementById("gallery-content").classList.remove("hidden");
+                document.getElementById("add-photo-content").classList.add("hidden");
+
+                // Mettre à jour la galerie avec la nouvelle photo
+                getWorks();
+            } else {
+                alert("Erreur lors de l'ajout de la photo.");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la requête :", error);
+            alert("Une erreur s'est produite.");
         }
     });
 }
@@ -322,9 +396,7 @@ function setupModalEvents() {
 /* FONCTION D'INITIALISATION GLOBALE */
 /* ===================== */
 
-/**
- * Charge les filtres et les travaux au démarrage
- */
+//Charge les filtres et les travaux au démarrage
 function initializePage() {
     getFiltre();
     getWorks();
@@ -338,4 +410,5 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeLoginButton();
     addLoginFormHandler();
     setupModalEvents();
+    setupAddPhotoForm(); 
 });
