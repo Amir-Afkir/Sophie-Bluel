@@ -456,7 +456,6 @@ function setupAddPhotoForm() {
     
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("addPhotoForm");
     const submitButton = document.querySelector(".validate-button");
@@ -483,7 +482,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialisation : désactive le bouton au chargement
     checkFormCompletion();
 });
-
 
 /* ===================== */
 /* FONCTION D'INITIALISATION GLOBALE */
