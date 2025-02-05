@@ -130,15 +130,17 @@
                 <h2>Ajout photo</h2>
                 <form id="addPhotoForm">
                     <div class="upload-container">
-                        <label for="photoInput" class="upload-label">
-                            <div class="upload-content">
-                                <i class="fa-regular fa-image"></i>
-                                <span>+ Ajouter photo</span>
-                                <p>jpg, png : 4mo max</p>
-                            </div>
-                        </label>
-                        <input type="file" id="photoInput" name="photo" accept="image/*" hidden required>
-                    </div>
+						<label for="photoInput" class="upload-label">
+							<div class="upload-content">
+								<i class="fa-regular fa-image"></i>
+								<span>+ Ajouter photo</span>
+								<p>jpg, png : 4mo max</p>
+							</div>
+						</label>
+						<input type="file" id="photoInput" name="photo" accept="image/*" hidden required>
+						<!-- Image preview -->
+						<img id="photoPreview" src="" alt="Aperçu de la photo">
+					</div>					
 
                     <label for="titleInput">Titre</label>
                     <input type="text" id="titleInput" name="title" required>

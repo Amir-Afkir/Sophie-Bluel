@@ -679,6 +679,14 @@ footer nav ul {
     border-color: #1D6154; /* Bordure verte au focus */
 }
 
+
+/* Ligne de séparation horizontale au dessus du bouton valider */
+.container-valide-button {
+	border-top : 1px solid #B3B3B3 ;
+	padding-top : 33px;
+	margin-top : 50px;
+}
+
 /* Bouton Valider */
 .validate-button {
 	margin : 0 auto 30px auto;
@@ -692,16 +700,19 @@ footer nav ul {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
+    text-align: center; 
 }
 
-.container-valide-button{
-	padding-top : 33px;
-	border-top : 1px solid #B3B3B3 ;
-	margin-top : 50px;
+/* Bouton désactivé */
+.validate-button:disabled {
+    background-color: #B3B3B3; /* Couleur grise */
+    cursor: not-allowed; /* Curseur non autorisé */
 }
 
-.validate-button:hover {
-    background-color: #145942; /* Couleur plus foncée au survol */
+#photoPreview {
+	display: none;
+    max-height: 169px;
+    max-width: 129px;
+	object-fit: cover;   
+    margin-top: 0px;
 }

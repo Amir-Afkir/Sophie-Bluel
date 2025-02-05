@@ -327,6 +327,7 @@ function setupAddPhotoForm() {
     const photoInput = document.getElementById("photoInput");
     const titleInput = document.getElementById("titleInput");
     const categorySelect = document.getElementById("categorySelect");
+    const photoPreview = document.getElementById("photoPreview");
 
     // Charger les catégories dans le formulaire
     async function loadCategories() {
@@ -344,27 +345,51 @@ function setupAddPhotoForm() {
             console.error(error);
         }
     }
+    
+    // Ajoute une option vide par défaut
+    categorySelect.innerHTML = '<option value=""> </option>';
 
     // Charger les catégories dès le chargement de la page
     loadCategories();
 
+    // Aperçu de l'image sélectionnée
+    photoInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+    
+        if (file) {
+            const reader = new FileReader();
+    
+            reader.onload = (e) => {
+                photoPreview.src = e.target.result; // Met à jour la source de l'image
+                photoPreview.style.display = "block"; // Affiche l'aperçu
+                document.querySelector('.upload-content').style.display = "none"; // Masque le conteneur
+            };
+    
+            reader.readAsDataURL(file); // Lit le contenu du fichier
+        } else {
+            photoPreview.style.display = "none"; // Cache l'aperçu si aucun fichier
+            photoPreview.src = "";
+            document.querySelector('.upload-content').style.display = "flex"; // Réaffiche le conteneur
+        }
+    });
+    
+
     // Gérer la soumission du formulaire
     addPhotoForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-
+    
         const formData = new FormData();
         const file = photoInput.files[0];
-
-        // Vérifier qu'un fichier a été sélectionné
+    
         if (!file) {
             alert("Veuillez sélectionner une image.");
             return;
         }
-
+    
         formData.append("image", file);
         formData.append("title", titleInput.value);
         formData.append("category", categorySelect.value);
-
+    
         try {
             const response = await fetch('http://localhost:5678/api/works', {
                 method: "POST",
@@ -373,15 +398,13 @@ function setupAddPhotoForm() {
                     Authorization: "Bearer " + localStorage.getItem("token"),
                 },
             });
-
+    
             if (response.ok) {
                 alert("Photo ajoutée avec succès !");
                 addPhotoForm.reset(); // Réinitialiser le formulaire
-                document.getElementById("gallery-content").classList.remove("hidden");
-                document.getElementById("add-photo-content").classList.add("hidden");
-
-                // Mettre à jour la galerie avec la nouvelle photo
-                getWorks();
+                photoPreview.style.display = "none"; // Cache l'aperçu
+                document.querySelector('.upload-content').style.display = "flex"; // Réaffiche le conteneur
+                getWorks(); // Met à jour la galerie
             } else {
                 alert("Erreur lors de l'ajout de la photo.");
             }
@@ -390,7 +413,37 @@ function setupAddPhotoForm() {
             alert("Une erreur s'est produite.");
         }
     });
+    
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("addPhotoForm");
+    const submitButton = document.querySelector(".validate-button");
+    const requiredFields = form.querySelectorAll("input[required], select[required]");
+
+    // Fonction pour vérifier si tous les champs requis sont remplis
+    const checkFormCompletion = () => {
+        let isComplete = true;
+
+        requiredFields.forEach((field) => {
+            if (!field.value.trim()) {
+                isComplete = false;
+            }
+        });
+
+        submitButton.disabled = !isComplete; // Désactive ou active le bouton
+    };
+
+    // Ajoutez un écouteur d'événements pour chaque champ requis
+    requiredFields.forEach((field) => {
+        field.addEventListener("input", checkFormCompletion); // Vérifie à chaque saisie
+    });
+
+    // Initialisation : désactive le bouton au chargement
+    checkFormCompletion();
+});
+
 
 /* ===================== */
 /* FONCTION D'INITIALISATION GLOBALE */
