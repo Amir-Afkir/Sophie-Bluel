@@ -52,14 +52,22 @@ table {
 /* ================================ */
 /* GLOBAL */
 /* ================================ */
+html {
+
+	background-color: white;
+}
+
 
 body {
+	padding-top:142px;
     width: 100vw; 
 	max-width: 1440px;
     margin: 0 auto;
     font-family: 'Work Sans', sans-serif;
     font-size: 14px;
     background-color: #FFFEF8;
+	box-sizing: border-box;
+
 }
 
 /* ================================ */
@@ -98,33 +106,65 @@ h2 {
 /* HEADER */
 /* ================================ */
 header {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100%; 
     display: flex;
     justify-content: space-between;
-    margin: 50px 0;
-    padding: 0 150px;
+    padding: 50px 150px;
+    background-color: #FFFEF8;
+	box-sizing: border-box;
+
 }
+
 
 nav ul {
-    display: flex;
-    align-items: center;
-    gap: 30px;
+    display: flex; /* Remplace Grid par Flexbox */
+    justify-content: flex-end; /* Aligne les éléments à droite */
+    align-items: center; /* Aligne verticalement */
+    gap: 45px;
+    padding-top: 8px; 
 }
 
+
 nav li {
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'Work Sans';
     font-size: 16px;
     font-weight: 400;
-    text-align: center;
 }
 
 nav li:hover {
-    color: #B1663C;
+	font-family: 'Work Sans'; 
+	color: black;
+	font-weight: 700; 
 }
 
-.fa-instagram {
+nav li:active {
+    color: black;
+    font-weight: 700;
+}
+
+#login-button {
+    color: black;
+    list-style: none;
+    outline: none;
+    text-decoration: none;
+    font-weight: 400; /* Défaut */
+    transition: font-weight 0.2s ease-in-out; /* Animation fluide */
+}
+
+
+#login-button.active {
+    font-weight: 700;
+}
+
+
+
+.instagram{
     font-size: 22px;
     color: black;
-    margin-left: 20px;
+	width: 22px;
 }
 
 /* ================================ */
@@ -307,7 +347,16 @@ nav li:hover {
 	font-size: 14px;	
 	font-weight: 700;
 	line-height: 16.8px; 
+	cursor: pointer; 
+
+	
 }
+
+#contact input[type="submit"]:hover{
+	background: #0E2F28;
+}
+
+
 
 /* ================================ */
 /* FOOTER */
@@ -344,7 +393,6 @@ footer nav ul {
  
 }
 
-
 #login h2 {
     font-family: 'Syne', sans-serif;
     font-size: 30px;
@@ -352,6 +400,7 @@ footer nav ul {
     color: #1D6154;
     margin-bottom: 20px;
 }
+
 
 #login form {
     display: flex;
@@ -395,6 +444,11 @@ footer nav ul {
 	box-sizing: border-box;
  
 }
+
+#login button:hover{
+	background: #0E2F28;
+}
+
 
 #login a {
     font-family: 'Work Sans', sans-serif;
@@ -562,9 +616,8 @@ footer nav ul {
 }
 
 .add-photo-button:hover {
-    background-color: #145942;
+    background-color: #0E2F28;
 }
-
 /* ================================ */
 /* MODALE MENU UPLOAD */
 /* ================================ */
@@ -706,6 +759,11 @@ footer nav ul {
     border-radius: 50px;
     cursor: pointer;
     text-align: center; 
+}
+
+
+.validate-button:hover{
+	background: #0E2F28;
 }
 
 /* Bouton désactivé */

@@ -187,42 +187,69 @@ function initializeLoginButton() {
     const editButton = document.getElementById("edit-button");
     const filtreButton = document.getElementById("filtre"); 
     const editionMode = document.getElementById("editionMode");
-    const body = document.body;
-
+    const headerNav = document.querySelector("header");
+    
     const token = localStorage.getItem("token");
 
     if (token) {
         // L'utilisateur est connecté
         updateLogin(loginButton, "logout", () => logout(dynamicLogin, pageSophie, loginButton));
-        dynamicLogin.style.display = "none";
-        pageSophie.style.display = "block";
         editButton.style.display = "block";
         filtreButton.style.display = "none";
-        editionMode.style.display = "flex";
-        body.style.marginTop = "97px";  
+        editionMode.style.display = "flex";  
     } else {
         // L'utilisateur n'est pas connecté
         updateLogin(loginButton, "login", () => showLoginPage(dynamicLogin, pageSophie));
-        dynamicLogin.style.display = "none";
-        pageSophie.style.display = "block";
         editButton.style.display = "none";
         filtreButton.style.display = "flex";
-        editionMode.style.display = "none";
-        body.style.marginTop = "0";  
+        editionMode.style.display = "none"; 
     }
+
+    // Ces lignes s'appliquent toujours, donc on les met hors du if/else
+    dynamicLogin.style.display = "none";
+    pageSophie.style.display = "block";
+
+    // Modifier la position du header en fonction de la connexion
+    if (token) {
+        headerNav.style.position = "absolute";  // Assure que le positionnement est pris en compte
+        headerNav.style.top = "47px";
+    } else {
+        headerNav.style.position = "absolute"; 
+        headerNav.style.top = "0";
+    }
+    
 }
+
+// Ajoute un événement de clic pour afficher/cacher le formulaire et modifier le style du bouton
+document.getElementById("login-button").addEventListener("click", function (event) {
+    event.preventDefault(); // Empêche le rechargement de la page si c'est un lien
+    
+    const dynamicLogin = document.getElementById("dynamic-login");
+    const loginButton = document.getElementById("login-button");
+
+    // Bascule l'affichage du formulaire de connexion
+    if (dynamicLogin.style.display === "none" || dynamicLogin.style.display === "") {
+        dynamicLogin.style.display = "block";
+        loginButton.style.fontWeight = "700"; // Gras
+    } else {
+        dynamicLogin.style.display = "none";
+        loginButton.style.fontWeight = "400"; // Normal
+    }
+});
 
 //Met à jour le libellé et le comportement du bouton de connexion/déconnexion
 function updateLogin(button, text, onClick) {
     button.textContent = text;
     button.href = "#login";
 
-    button.addEventListener('click', (event) => {
+    // Supprime les anciens gestionnaires d'événements pour éviter les doublons
+    const newButton = button.cloneNode(true);
+    button.replaceWith(newButton);
+    newButton.addEventListener('click', (event) => {
         event.preventDefault();
         onClick();
     });
 }
-
 
 //Déconnecte l'utilisateur en supprimant le token et actualise l'affichage
 function logout(dynamicLogin, pageSophie, loginButton) {
@@ -235,6 +262,10 @@ function logout(dynamicLogin, pageSophie, loginButton) {
 function showLoginPage(dynamicLogin, pageSophie) {
     dynamicLogin.style.display = "block";
     pageSophie.style.display = "none";
+
+    // Mettre le bouton "Login" en gras
+    const loginButton = document.getElementById("login-button");
+    loginButton.style.fontWeight = "700";
 }
 
 //Ajoute l'événement de soumission sur le formulaire de connexion
@@ -262,7 +293,7 @@ function addLoginFormHandler() {
                 alert("Connexion réussie !");
                 window.location.href = "index.html"; // Redirige vers la page d'accueil
             } else if (response.status === 401 || response.status === 404) {
-                alert("Email ou mot de passe incorrect.");
+                alert("Erreur dans l’identifiant ou le mot de passe");
             } else {
                 throw new Error("Une erreur inattendue s'est produite.");
             }
