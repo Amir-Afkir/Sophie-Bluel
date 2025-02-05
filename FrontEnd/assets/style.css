@@ -52,17 +52,14 @@ table {
 /* ================================ */
 /* GLOBAL */
 /* ================================ */
+
 body {
-    width: 100vw;
-    margin: 0;
+    width: 100vw; 
+	max-width: 1440px;
+    margin: 0 auto;
     font-family: 'Work Sans', sans-serif;
     font-size: 14px;
     background-color: #FFFEF8;
-}
-
-.container {
-    max-width: 1440px;
-    margin: 0 auto;
 }
 
 /* ================================ */
@@ -336,11 +333,17 @@ footer nav ul {
 /* PAGE DE CONNEXION */
 /* ================================ */
 #login {
-    max-width: 500px;
-    margin: 100px auto;
-    text-align: center;
-    padding: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: top;
+    max-width: 379px;
+	min-height: 724px;
+    margin: 150px auto 0 auto;
+    text-align: center; 
+	box-sizing: border-box;
+ 
 }
+
 
 #login h2 {
     font-family: 'Syne', sans-serif;
@@ -353,7 +356,7 @@ footer nav ul {
 #login form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 7px;
 }
 
 #login label {
@@ -361,9 +364,11 @@ footer nav ul {
     font-size: 14px;
     color: #333;
     text-align: left;
+	margin-top: 20px;
 }
 
 #login input {
+	height: 51px;
     padding: 12px;
     font-size: 16px;
     font-family: 'Work Sans', sans-serif;
@@ -371,6 +376,8 @@ footer nav ul {
     border: none;
     outline: none;
     box-shadow: 0px 0px 5px rgba(29, 97, 84, 0.5);
+	box-sizing: border-box;
+
 }
 
 #login button {
@@ -380,15 +387,13 @@ footer nav ul {
     font-size: 14px;
     font-weight: 700;
     border: none;
-    padding: 12px;
     border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 150px;
-}
-
-#login button:hover {
-    background-color: #145942;
+    cursor: pointer; 
+    width: 179px; 
+	height: 36px;
+	margin: 28px auto 13px auto; 
+	box-sizing: border-box;
+ 
 }
 
 #login a {

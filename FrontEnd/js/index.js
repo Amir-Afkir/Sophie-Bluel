@@ -37,7 +37,10 @@ async function getFiltre() {
 
         // Ajoute une catégorie "Tous" en première position
         categories.unshift({ id: 0, name: "Tous" });
-        filtre.innerHTML = ""; // Vide le conteneur pour éviter les doublons
+        while (filtre.firstChild) {
+            filtre.removeChild(filtre.firstChild);
+        }
+        
 
         categories.forEach(category => {
             const bouton = document.createElement("button");
@@ -60,7 +63,9 @@ async function getFiltre() {
 
 //Affiche les travaux dans le portfolio principal
 function displayWorks(works) {
-    gallery.innerHTML = ""; // Réinitialise la galerie
+    while (gallery.firstChild) {
+        gallery.removeChild(gallery.firstChild);  
+    }
     works.forEach(work => {
         const figure = createWorkFigure(work);
         gallery.appendChild(figure);
@@ -69,7 +74,9 @@ function displayWorks(works) {
 
 //Affiche les travaux dans la modale
 function displayWorksModal(works) {
-    photoGallery.innerHTML = ""; // Vide le conteneur pour éviter les doublons
+    while (photoGallery.firstChild) {
+        photoGallery.removeChild(photoGallery.firstChild);  
+    }
     works.forEach(work => {
         const modalFigure = createModalWorkFigure(work);
         photoGallery.appendChild(modalFigure);
@@ -186,7 +193,7 @@ function initializeLoginButton() {
 
     if (token) {
         // L'utilisateur est connecté
-        updateLoginButtonState(loginButton, "logout", () => logout(dynamicLogin, pageSophie, loginButton));
+        updateLogin(loginButton, "logout", () => logout(dynamicLogin, pageSophie, loginButton));
         dynamicLogin.style.display = "none";
         pageSophie.style.display = "block";
         editButton.style.display = "block";
@@ -195,7 +202,7 @@ function initializeLoginButton() {
         body.style.marginTop = "97px";  
     } else {
         // L'utilisateur n'est pas connecté
-        updateLoginButtonState(loginButton, "login", () => showLoginPage(dynamicLogin, pageSophie));
+        updateLogin(loginButton, "login", () => showLoginPage(dynamicLogin, pageSophie));
         dynamicLogin.style.display = "none";
         pageSophie.style.display = "block";
         editButton.style.display = "none";
@@ -206,14 +213,16 @@ function initializeLoginButton() {
 }
 
 //Met à jour le libellé et le comportement du bouton de connexion/déconnexion
-function updateLoginButtonState(button, text, onClickHandler) {
+function updateLogin(button, text, onClick) {
     button.textContent = text;
     button.href = "#login";
-    button.onclick = (event) => {
+
+    button.addEventListener('click', (event) => {
         event.preventDefault();
-        onClickHandler();
-    };
+        onClick();
+    });
 }
+
 
 //Déconnecte l'utilisateur en supprimant le token et actualise l'affichage
 function logout(dynamicLogin, pageSophie, loginButton) {
