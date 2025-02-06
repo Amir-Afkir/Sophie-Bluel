@@ -41,7 +41,7 @@
     </header>
 
     <!-- Section de connexion -->
-    <main id="dynamic-login">
+    <div id="dynamic-login">
         <section id="login">
             <h2>Log In</h2>
             <form id="loginForm">
@@ -55,12 +55,13 @@
             </form>
             <a href="#" id="forgot-password">Mot de passe oublié</a>
         </section>
-    </main>
+    </div>
 
     <!-- Page principale -->
     <main id="Page-Sophie">
         <!-- Section Introduction -->
         <section id="introduction">
+			<h2 class="hidden">Introduction</h2>
             <figure>
                 <img src="./assets/images/sophie-bluel.png" alt="Portrait de Sophie Bluel">
             </figure>
@@ -82,6 +83,7 @@
 
         <!-- Galerie de projets -->
         <section id="portfolio">
+			<h2 class="hidden">portfolio</h2>
             <div id="filtre" class="filtre"></div>
             <div class="gallery">
                 <!-- Les projets sont générés dynamiquement via JS -->
@@ -96,8 +98,8 @@
                 <label for="name">Nom</label>
                 <input type="text" name="name" id="name" required>
 
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required>
+                <label for="email-contact">Email</label>
+                <input type="email" name="email-contact" id="email-contact" required>
 
                 <label for="message">Message</label>
                 <textarea name="message" id="message" cols="30" rows="10" required></textarea>
@@ -129,25 +131,30 @@
                 <h2>Ajout photo</h2>
                 <form id="addPhotoForm">
                     <div class="upload-container">
-						<label for="photoInput" class="upload-label">
-							<div class="upload-content">
+						<div class="upload-content">
+							<label for="photoInput" class="upload-label">
 								<i class="fa-regular fa-image"></i>
 								<span>+ Ajouter photo</span>
-								<p>jpg, png : 4mo max</p>
-							</div>
-						</label>
+							</label>
+							<p class="upload-info">jpg, png : 4mo max</p>
+						</div>
 						<input type="file" id="photoInput" name="photo" accept="image/*" hidden required>
 						<!-- Image preview -->
-						<img id="photoPreview" src="" alt="Aperçu de la photo">
+						<img id="photoPreview" src="#" alt="Aperçu de la photo" style="display: none;">
 					</div>					
 
                     <label for="titleInput">Titre</label>
                     <input type="text" id="titleInput" name="title" required>
 
                     <label for="categorySelect">Catégorie</label>
-                    <select id="categorySelect" name="category" required></select>
-
-                    <div class="container-valide-button"><button type="submit" class="validate-button">Valider</button></div>
+                    <select id="categorySelect" name="category" required>
+						<option value="" disabled selected>Choisir une catégorie</option>
+						<!-- Les options sont ajoutées dynamiquement en JS -->
+					</select>
+					
+                    <div class="container-valide-button">
+						<button type="submit" class="validate-button">Valider</button>
+					</div>
                 </form>
             </div>
         </div>
@@ -157,7 +164,7 @@
     <footer>
         <nav>
             <ul>
-                <a class="navFooter">Mentions Légales</a>
+                <li class="navFooter">Mentions Légales</li>
             </ul>
         </nav>
     </footer>

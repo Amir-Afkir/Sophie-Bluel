@@ -375,7 +375,7 @@ footer nav ul {
 .navFooter {
     margin: 7px 97px;
     font-size: 14px;
-	cursor:default;
+	cursor:pointer;
 }
 
 
@@ -641,30 +641,19 @@ footer nav ul {
 
 .upload-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
     background: #E8F1F6;
     height: 169px;
     width: 420px;
-    margin: auto;
     border-radius: 3px;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 400;
+}
+
+.upload-info { 
+	font-size: 10px; 
     color: #444444;
+	cursor:default;
 }
 
-.upload-container p {
-	font-family: 'Work Sans';
-	font-size: 10px;
-	font-weight: 400;
-	line-height: 11.73px;
-	text-align: center; 
-	text-decoration-skip-ink: none;
-}
-
-.upload-content, .upload-container i, #photoPreview {
+.upload-content, .upload-container label, #photoPreview {
     display: flex;
     flex-direction: column;
     align-items: center;
