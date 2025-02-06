@@ -90,7 +90,6 @@ function displayWorksModal(works) {
 //Crée un élément <figure> pour un travail à afficher dans le portfolio
 function createWorkFigure(work) {
     const figure = document.createElement("figure");
-    figure.id = work.categoryId; // On peut utiliser l'ID de la catégorie si besoin
 
     const img = document.createElement("img");
     img.src = work.imageUrl;
@@ -124,12 +123,17 @@ function createModalWorkFigure(work) {
         if (confirm("Confirmer la suppression ?")) {
             const response = await fetch(`http://localhost:5678/api/works/${work.id}`, {
                 method: "DELETE",
-                headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+                headers: { Authorization: "Bearer " + sessionStorage.getItem("token") }
             });
             if (response.ok) {
-                div.remove(); // Supprime l'élément dans la modale
-                // Supprime également le travail dans le portfolio principal
-                document.querySelector(`.gallery img[src="${work.imageUrl}"]`)?.parentElement.remove();
+                // Supprime l'élément de la modale
+                div.remove();
+
+                // Trouver et supprimer l'élément correspondant dans la galerie principale
+                const projectToRemove = document.querySelector(`.gallery img[src="${work.imageUrl}"]`);
+                if (projectToRemove) {
+                    projectToRemove.parentElement.remove();
+                } 
                 alert("Projet supprimé !");
             } else {
                 alert("Erreur lors de la suppression.");
@@ -189,7 +193,7 @@ function initializeLoginButton() {
     const editionMode = document.getElementById("editionMode");
     const headerNav = document.querySelector("header");
     
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     if (token) {
         // L'utilisateur est connecté
@@ -253,7 +257,7 @@ function updateLogin(button, text, onClick) {
 
 //Déconnecte l'utilisateur en supprimant le token et actualise l'affichage
 function logout(dynamicLogin, pageSophie, loginButton) {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     alert("Vous êtes déconnecté.");
     initializeLoginButton();
 }
@@ -289,7 +293,7 @@ function addLoginFormHandler() {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem("token", data.token); // Stocke le token de connexion
+                sessionStorage.setItem("token", data.token); // Stocke le token de connexion
                 alert("Connexion réussie !");
                 window.location.href = "index.html"; // Redirige vers la page d'accueil
             } else if (response.status === 401 || response.status === 404) {
@@ -435,16 +439,30 @@ function setupAddPhotoForm() {
                 method: "POST",
                 body: formData,
                 headers: {
-                    Authorization: "Bearer " + localStorage.getItem("token"),
+                    Authorization: "Bearer " + sessionStorage.getItem("token"),
                 },
             });
     
             if (response.ok) {
+                const newWork = await response.json(); // Récupère les données du projet ajouté
+            
+                // Ajoute l'élément dans la galerie principale
+                const figure = createWorkFigure(newWork);
+                gallery.appendChild(figure);
+            
+                // Ajoute l'élément dans la modale
+                const modalFigure = createModalWorkFigure(newWork);
+                photoGallery.appendChild(modalFigure);
+            
+                // Réinitialiser le formulaire et masquer la modale
+                addPhotoForm.reset();
+                photoPreview.style.display = "none";
+                document.querySelector('.upload-content').style.display = "flex";
+            
                 alert("Photo ajoutée avec succès !");
-                addPhotoForm.reset(); // Réinitialiser le formulaire
-                photoPreview.style.display = "none"; // Cache l'aperçu
-                document.querySelector('.upload-content').style.display = "flex"; // Réaffiche le conteneur
-                getWorks(); // Met à jour la galerie
+            
+
+            
             } else {
                 alert("Erreur lors de l'ajout de la photo.");
             }

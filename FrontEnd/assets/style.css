@@ -132,6 +132,7 @@ nav li {
     font-family: 'Work Sans';
     font-size: 16px;
     font-weight: 400; 
+	cursor: default;
 }
 
 nav li:hover {
@@ -219,8 +220,9 @@ nav li:active {
     display: flex; 
     justify-content: center;
     gap: 25px;
-    margin: 100px 0 50px 120px;
+    margin: 100px 0 50px 0px;
 }
+
 
 .buttonModife button {
 	font-family: 'Work Sans';
