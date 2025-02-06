@@ -216,31 +216,30 @@ nav li:active {
 }
 
 /* Boutons de modification */
-.buttonModife {
+#buttonModife {
     display: flex; 
-    justify-content: center;
+    justify-content: left;
     gap: 25px;
-    margin: 100px 0 50px 0px;
+    margin: 100px auto 50px 625px;
+	width:fit-content;
 }
 
-
-.buttonModife button {
+#buttonModife button {
 	font-family: 'Work Sans';
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 16.42px; 
     background: transparent;
     border: none;
+	cursor: pointer;
 }
 
-.buttonModife i {
-
+#buttonModife i {
 	margin-right:10px;
     color: black;
 	font-weight: 400;
     font-size: 16px;
-}
-
+}  
 /* ================================ */
 /* FILTRE */
 /* ================================ */
@@ -665,12 +664,13 @@ footer nav ul {
 	text-decoration-skip-ink: none;
 }
 
-.upload-content, .upload-container i {
+.upload-content, .upload-container i, #photoPreview {
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #E8F1F6;
 	margin : auto;
+	cursor: pointer;
 }
 
 .upload-container i {

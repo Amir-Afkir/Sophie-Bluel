@@ -133,8 +133,7 @@ function createModalWorkFigure(work) {
                 const projectToRemove = document.querySelector(`.gallery img[src="${work.imageUrl}"]`);
                 if (projectToRemove) {
                     projectToRemove.parentElement.remove();
-                } 
-                alert("Projet supprimé !");
+                };
             } else {
                 alert("Erreur lors de la suppression.");
             }
@@ -258,7 +257,6 @@ function updateLogin(button, text, onClick) {
 //Déconnecte l'utilisateur en supprimant le token et actualise l'affichage
 function logout(dynamicLogin, pageSophie, loginButton) {
     sessionStorage.removeItem("token");
-    alert("Vous êtes déconnecté.");
     initializeLoginButton();
 }
 
@@ -293,8 +291,7 @@ function addLoginFormHandler() {
 
             if (response.ok) {
                 const data = await response.json();
-                sessionStorage.setItem("token", data.token); // Stocke le token de connexion
-                alert("Connexion réussie !");
+                sessionStorage.setItem("token", data.token); // Stocke le token de connexion;
                 window.location.href = "index.html"; // Redirige vers la page d'accueil
             } else if (response.status === 401 || response.status === 404) {
                 alert("Erreur dans l’identifiant ou le mot de passe");
@@ -416,7 +413,11 @@ function setupAddPhotoForm() {
             document.querySelector('.upload-content').style.display = "flex"; // Réaffiche le conteneur
         }
     });
-    
+
+    // Pour changer d'image en cliquant sur l'aperçu
+    photoPreview.addEventListener("click", () => {
+        photoInput.click();
+    });
 
     // Gérer la soumission du formulaire
     addPhotoForm.addEventListener("submit", async (event) => {
@@ -458,8 +459,6 @@ function setupAddPhotoForm() {
                 addPhotoForm.reset();
                 photoPreview.style.display = "none";
                 document.querySelector('.upload-content').style.display = "flex";
-            
-                alert("Photo ajoutée avec succès !");
             
 
             
