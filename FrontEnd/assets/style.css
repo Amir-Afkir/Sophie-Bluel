@@ -385,7 +385,6 @@ footer nav ul {
 #login {
 	display: flex;
 	flex-direction: column;
-	justify-content: top;
     max-width: 379px;
 	min-height: 724px;
     margin: 150px auto 0 auto;
