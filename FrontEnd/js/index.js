@@ -51,7 +51,7 @@ async function getFiltre() {
             filtre.appendChild(bouton); // Insère le bouton dans le conteneur
         });
 
-        initializeFilterButtons(); // Configure les événements sur les boutons de filtre
+        initializeFilterButtons(); // Configure les événements r les boutons de filtre
     } catch (error) {
         console.error("Erreur lors de la récupération des catégories :", error);
     }
@@ -337,6 +337,7 @@ function setupModalEvents() {
         galleryContent.classList.remove("hidden");
         blockAddPhoto.classList.remove("visible");
         blockAddPhoto.classList.add("hidden");
+        resetFormulaire();
     });
 
     // Ferme la modale quand l'utilisateur clique sur la croix
@@ -345,6 +346,8 @@ function setupModalEvents() {
         blockAddPhoto.classList.remove("visible");
         blockAddPhoto.classList.add("hidden");
         modal.classList.remove("visible");
+
+        resetFormulaire();
     });
 
     // Ferme la modale si l'utilisateur clique en dehors du contenu
@@ -354,8 +357,12 @@ function setupModalEvents() {
             blockAddPhoto.classList.remove("visible");
             blockAddPhoto.classList.add("hidden");
             modal.classList.remove("visible");;
+
+            resetFormulaire();
         }
     });    
+
+
 }
 
 /* ===================== */
@@ -456,9 +463,7 @@ function setupAddPhotoForm() {
                 photoGallery.appendChild(modalFigure);
             
                 // Réinitialiser le formulaire et masquer la modale
-                addPhotoForm.reset();
-                photoPreview.style.display = "none";
-                document.querySelector('.upload-content').style.display = "flex";
+                resetFormulaire();
             
 
             
@@ -520,3 +525,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setupModalEvents();
     setupAddPhotoForm(); 
 });
+
+
+/* ===================== */
+/* RESET DU FORMULAIRE */
+/* ===================== */
+
+function resetFormulaire(){
+    addPhotoForm.reset();
+    photoPreview.style.display = "none";
+    document.querySelector('.upload-content').style.display = "flex";
+}
