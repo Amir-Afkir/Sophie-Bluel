@@ -270,9 +270,10 @@ function showLoginPage(dynamicLogin, pageSophie) {
     loginButton.style.fontWeight = "700";
 }
 
-//Ajoute l'événement de soumission sur le formulaire de connexion
+// Ajoute l'événement de soumission sur le formulaire de connexion
 function addLoginFormHandler() {
     const loginForm = document.getElementById("loginForm");
+    const loginError = document.getElementById("login-error"); // Sélectionne l'élément du message d'erreur
 
     loginForm.addEventListener("submit", async function (event) {
         event.preventDefault(); // Empêche le rechargement de la page
@@ -291,19 +292,21 @@ function addLoginFormHandler() {
 
             if (response.ok) {
                 const data = await response.json();
-                sessionStorage.setItem("token", data.token); // Stocke le token de connexion;
+                sessionStorage.setItem("token", data.token); // Stocke le token de connexion
                 window.location.href = "index.html"; // Redirige vers la page d'accueil
             } else if (response.status === 401 || response.status === 404) {
-                alert("Erreur dans l’identifiant ou le mot de passe");
+                loginError.style.display = "block"; // Affiche le message d'erreur
             } else {
                 throw new Error("Une erreur inattendue s'est produite.");
             }
         } catch (error) {
             console.error("Erreur lors de la connexion :", error);
-            alert("Impossible de se connecter. Veuillez réessayer plus tard.");
+            loginError.textContent = "Impossible de se connecter. Veuillez réessayer plus tard.";
+            loginError.style.display = "block"; // Affiche le message d'erreur
         }
     });
 }
+
 
 /* ===================== */
 /* FONCTIONS DE GESTION DE LA MODALE */
@@ -361,8 +364,6 @@ function setupModalEvents() {
             resetFormulaire();
         }
     });    
-
-
 }
 
 /* ===================== */
@@ -506,6 +507,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ===================== */
+/* RESET DU FORMULAIRE */
+/* ===================== */
+
+function resetFormulaire(){
+    addPhotoForm.reset();
+    photoPreview.style.display = "none";
+    document.querySelector('.upload-content').style.display = "flex";
+}
+
+/* ===================== */
 /* FONCTION D'INITIALISATION GLOBALE */
 /* ===================== */
 
@@ -525,14 +536,3 @@ document.addEventListener("DOMContentLoaded", () => {
     setupModalEvents();
     setupAddPhotoForm(); 
 });
-
-
-/* ===================== */
-/* RESET DU FORMULAIRE */
-/* ===================== */
-
-function resetFormulaire(){
-    addPhotoForm.reset();
-    photoPreview.style.display = "none";
-    document.querySelector('.upload-content').style.display = "flex";
-}
