@@ -528,6 +528,10 @@ footer nav ul {
     text-align: center;
 }
 
+.close-button i, .back-button i {
+    color : black;
+    }
+
 /* ================================ */
 /* MODALE MENU GALERIE PHOTO */
 /* ================================ */
@@ -624,7 +628,6 @@ footer nav ul {
     border: none;
     cursor: pointer;
 }
-
 
 .upload-container {
     display: flex;
