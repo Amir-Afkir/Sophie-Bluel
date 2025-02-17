@@ -131,6 +131,9 @@ nav ul {
     padding-top: 8px;
 }
 
+nav ul a, .navFooter {
+    color : black
+}
 
 nav li {
     font-family: 'Work Sans';
@@ -141,7 +144,7 @@ nav li {
 
 nav li:hover {
 	font-family: 'Work Sans';
-	font-weight: 700; 
+	font-weight: 700;
 }
 
 nav li:active {
