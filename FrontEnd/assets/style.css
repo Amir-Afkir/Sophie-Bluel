@@ -207,7 +207,7 @@ nav li:active {
 }
 
 /* Boutons de modification */
-#buttonModife {
+#projet {
     display: flex; 
     justify-content: left;
     gap: 25px;
@@ -215,7 +215,7 @@ nav li:active {
 	width:fit-content;
 }
 
-#buttonModife button {
+#projet button {
 	font-family: 'Work Sans';
 	font-size: 14px;
 	font-weight: 400;
@@ -225,7 +225,7 @@ nav li:active {
 	cursor: pointer;
 }
 
-#buttonModife i {
+#projet i {
 	margin-right:10px;
 	font-weight: 400;
     font-size: 16px;
