@@ -20,9 +20,12 @@ time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    list-style: none;
+    outline: none;
+    text-decoration: none;
+    color: #3D3D3D;
 }
 
 article, aside, details, figcaption, figure,
@@ -92,6 +95,7 @@ h1 span {
 	line-height: 11.73px;
 	letter-spacing: 0.05em;
 	text-align: left;
+    color: #B1663C;
 }
 
 h2 {
@@ -124,7 +128,7 @@ nav ul {
     justify-content: flex-end; /* Aligne les éléments à droite */
     align-items: center; /* Aligne verticalement */
     gap: 45px;
-    padding-top: 8px; 
+    padding-top: 8px;
 }
 
 
@@ -136,31 +140,16 @@ nav li {
 }
 
 nav li:hover {
-	font-family: 'Work Sans'; 
-	color: black;
+	font-family: 'Work Sans';
 	font-weight: 700; 
 }
 
 nav li:active {
-    color: black;
-    font-weight: 700;
-}
-
-#login-button {
-    color: black;
-    list-style: none;
-    outline: none;
-    text-decoration: none;
-    font-weight: 400; 
-}
-
-#login-button:hover {
     font-weight: 700;
 }
 
 .instagram{
     font-size: 22px;
-    color: black;
 	width: 22px;
 }
 
@@ -198,7 +187,6 @@ nav li:active {
     margin-bottom: 16.42px;
     font-size: 14px;
     font-weight: 400;
-    color: #3D3D3D;
 }
 
 /* ================================ */
@@ -236,7 +224,6 @@ nav li:active {
 
 #buttonModife i {
 	margin-right:10px;
-    color: black;
 	font-weight: 400;
     font-size: 16px;
 }  
@@ -285,7 +272,6 @@ nav li:active {
     font-family: 'Work Sans', sans-serif;
     font-size: 13px;
 	margin-top : 4px;
-    color: black;
 }
 
 /* ================================ */
@@ -454,7 +440,6 @@ footer nav ul {
 #login a {
     font-family: 'Work Sans', sans-serif;
     font-size: 14px;
-    color: black;
     text-decoration: none;
     margin-top: 15px;
     display: inline-block;
@@ -537,7 +522,6 @@ footer nav ul {
     font-family: 'Work Sans', sans-serif;
     font-size: 26px;
     font-weight: 400;
-    color: black;
     text-align: center;
 }
 
@@ -633,7 +617,6 @@ footer nav ul {
     left: 23px;
     display: flex;
     background: transparent;
-    color: black;
     font-size: 25px;
     border: none;
     cursor: pointer;
@@ -649,8 +632,7 @@ footer nav ul {
 }
 
 .upload-info { 
-	font-size: 10px; 
-    color: #444444;
+	font-size: 10px;
 	cursor:default;
 }
 
@@ -698,7 +680,6 @@ footer nav ul {
     font-family: 'Work Sans', sans-serif;
     font-size: 14px;
     font-weight: 500;
-    color: #333;
     margin: 30px 0 7px 0;
 	text-align: left;
 }
