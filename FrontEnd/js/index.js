@@ -182,7 +182,7 @@ function initializeFilterButtons() {
 /* FONCTIONS DE GESTION DE LA CONNEXION */
 /* ===================== */
 
-//Configure l'affichage selon que l'utilisateur soit connecté ou non
+//Configure l'affichage selon que l'utilisateur est connecté ou non
 function initializeLoginButton() {
     const loginButton = document.getElementById("login-button");
     const dynamicLogin = document.getElementById("dynamic-login");
@@ -208,7 +208,7 @@ function initializeLoginButton() {
         editionMode.style.display = "none"; 
     }
 
-    // Ces lignes s'appliquent toujours, donc on les met hors du if/else
+    // Masquer le formulaire de connexion par défaut 
     dynamicLogin.style.display = "none";
     pageSophie.style.display = "block";
 
@@ -349,7 +349,6 @@ function setupModalEvents() {
         blockAddPhoto.classList.remove("visible");
         blockAddPhoto.classList.add("hidden");
         modal.classList.remove("visible");
-
         resetFormulaire();
     });
 
@@ -360,7 +359,6 @@ function setupModalEvents() {
             blockAddPhoto.classList.remove("visible");
             blockAddPhoto.classList.add("hidden");
             modal.classList.remove("visible");;
-
             resetFormulaire();
         }
     });    
@@ -510,10 +508,21 @@ document.addEventListener("DOMContentLoaded", () => {
 /* RESET DU FORMULAIRE */
 /* ===================== */
 
-function resetFormulaire(){
+function resetFormulaire() {
+    const addPhotoForm = document.getElementById("addPhotoForm");
+    const photoPreview = document.getElementById("photoPreview");
+    const uploadContent = document.querySelector('.upload-content');
+    const submitButton = document.querySelector(".validate-button");
+
+    // Réinitialise le formulaire
     addPhotoForm.reset();
+
+    // Cache l'aperçu de l'image
     photoPreview.style.display = "none";
-    document.querySelector('.upload-content').style.display = "flex";
+    uploadContent.style.display = "flex";
+
+    // Désactive le bouton tant que tous les champs ne sont pas remplis
+    submitButton.disabled = true;
 }
 
 /* ===================== */
