@@ -430,14 +430,7 @@ function setupAddPhotoForm() {
         event.preventDefault();
     
         const formData = new FormData();
-        const file = photoInput.files[0];
-    
-        if (!file) {
-            alert("Veuillez sélectionner une image.");
-            return;
-        }
-    
-        formData.append("image", file);
+        formData.append("image", photoInput.files[0]);
         formData.append("title", titleInput.value);
         formData.append("category", categorySelect.value);
     
@@ -445,27 +438,20 @@ function setupAddPhotoForm() {
             const response = await fetch('http://localhost:5678/api/works', {
                 method: "POST",
                 body: formData,
-                headers: {
-                    Authorization: "Bearer " + sessionStorage.getItem("token"),
-                },
+                headers: { Authorization: "Bearer " + sessionStorage.getItem("token") },
             });
     
             if (response.ok) {
-                const newWork = await response.json(); // Récupère les données du projet ajouté
-            
-                // Ajoute l'élément dans la galerie principale
-                const figure = createWorkFigure(newWork);
-                gallery.appendChild(figure);
-            
-                // Ajoute l'élément dans la modale
-                const modalFigure = createModalWorkFigure(newWork);
-                photoGallery.appendChild(modalFigure);
-            
-                // Réinitialiser le formulaire et masquer la modale
+                const newWork = await response.json();
+                
+                // Met à jour la liste locale des projets
+                allWorks.push(newWork);
+                
+                // Rafraîchit l'affichage en rechargeant les travaux depuis l'API
+                getWorks();
+    
+                // Réinitialiser le formulaire
                 resetFormulaire();
-            
-
-            
             } else {
                 alert("Erreur lors de l'ajout de la photo.");
             }
@@ -474,6 +460,7 @@ function setupAddPhotoForm() {
             alert("Une erreur s'est produite.");
         }
     });
+    
     
 }
 
