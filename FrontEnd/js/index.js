@@ -5,6 +5,8 @@ let allWorks = [];
 const gallery = document.querySelector('.gallery');
 const filtre = document.querySelector(".filtre");
 const photoGallery = document.querySelector('.photo-gallery');
+const API_BASE_URL = `http://localhost:5678/api`;
+
 
 /* ===================== */
 /* FONCTIONS D'ACCÈS À L'API */
@@ -13,7 +15,7 @@ const photoGallery = document.querySelector('.photo-gallery');
 //Récupère les travaux depuis l'API et met à jour l'affichage
 async function getWorks() {
     try {
-        const response = await fetch('http://localhost:5678/api/works');
+        const response = await fetch(`${API_BASE_URL}/works`); 
         if (!response.ok) {
             throw new Error("Erreur lors de l'appel à l'API pour les travaux");
         }
@@ -29,7 +31,7 @@ async function getWorks() {
 //Récupère les catégories depuis l'API et crée les boutons de filtre
 async function getFiltre() {
     try {
-        const response = await fetch('http://localhost:5678/api/categories');
+        const response = await fetch(`${API_BASE_URL}/categories`);
         if (!response.ok) {
             throw new Error("Erreur lors de l'appel à l'API pour les catégories");
         }
@@ -121,7 +123,7 @@ function createModalWorkFigure(work) {
     deleteButton.addEventListener("click", async (e) => {
         e.stopPropagation(); // Empêche la fermeture accidentelle de la modale
         if (confirm("Confirmer la suppression ?")) {
-            const response = await fetch(`http://localhost:5678/api/works/${work.id}`, {
+            const response = await fetch(`${API_BASE_URL}/works/${work.id}`, {
                 method: "DELETE",
                 headers: { Authorization: "Bearer " + sessionStorage.getItem("token") }
             });
@@ -187,25 +189,45 @@ function initializeLoginButton() {
     const loginButton = document.getElementById("login-button");
     const dynamicLogin = document.getElementById("dynamic-login");
     const pageSophie = document.getElementById("Page-Sophie");
-    const editButton = document.getElementById("edit-button");
     const filtreButton = document.getElementById("filtre"); 
     const editionMode = document.getElementById("editionMode");
     const headerNav = document.querySelector("header");
-    
+    const Projet = document.getElementById("projet");
+
     const token = sessionStorage.getItem("token");
 
     if (token) {
         // L'utilisateur est connecté
         updateLogin(loginButton, "logout", () => logout(dynamicLogin, pageSophie, loginButton));
-        editButton.style.display = "block";
+        
+        // Masquer le filtre
         filtreButton.style.display = "none";
         editionMode.style.display = "flex";  
+
+        // Ajouter dynamiquement le bouton Modifier
+        let editButton = document.getElementById("edit-button");
+        if (!editButton) {
+            editButton = document.createElement("button");
+            editButton.id = "edit-button";
+            editButton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Modifier';
+            Projet.appendChild(editButton);
+            
+            // Ajouter l'événement pour ouvrir la modale
+            editButton.addEventListener("click", () => {
+                document.getElementById("modal").classList.add("visible");
+            });
+        }
     } else {
         // L'utilisateur n'est pas connecté
         updateLogin(loginButton, "login", () => showLoginPage(dynamicLogin, pageSophie));
-        editButton.style.display = "none";
         filtreButton.style.display = "flex";
         editionMode.style.display = "none"; 
+        
+        // Supprimer le bouton Modifier s'il existe
+        const editButton = document.getElementById("edit-button");
+        if (editButton) {
+            editButton.remove();
+        }
     }
 
     // Masquer le formulaire de connexion par défaut 
@@ -214,13 +236,12 @@ function initializeLoginButton() {
 
     // Modifier la position du header en fonction de la connexion
     if (token) {
-        headerNav.style.position = "absolute";  // Assure que le positionnement est pris en compte
+        headerNav.style.position = "absolute";  
         headerNav.style.top = "47px";
     } else {
         headerNav.style.position = "absolute"; 
         headerNav.style.top = "0";
     }
-    
 }
 
 // Ajoute un événement de clic pour afficher/cacher le formulaire et modifier le style du bouton
@@ -284,7 +305,7 @@ function addLoginFormHandler() {
 
         try {
             // Envoie une requête à l'API pour tenter la connexion
-            const response = await fetch("http://localhost:5678/api/users/login", {
+            const response = await fetch(`${API_BASE_URL}/users/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(loginData),
@@ -379,7 +400,7 @@ function setupAddPhotoForm() {
     // Charger les catégories dans le formulaire
     async function loadCategories() {
         try {
-            const response = await fetch('http://localhost:5678/api/categories');
+            const response = await fetch(`http://localhost:5678/api/categories`);
             if (!response.ok) throw new Error('Erreur lors de la récupération des catégories');
             const categories = await response.json();
             categories.forEach(category => {
@@ -435,7 +456,7 @@ function setupAddPhotoForm() {
         formData.append("category", categorySelect.value);
     
         try {
-            const response = await fetch('http://localhost:5678/api/works', {
+            const response = await fetch(`${API_BASE_URL}/api/works`, {
                 method: "POST",
                 body: formData,
                 headers: { Authorization: "Bearer " + sessionStorage.getItem("token") },
